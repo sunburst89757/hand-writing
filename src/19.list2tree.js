@@ -2,7 +2,7 @@
  * @Author: sunburst89757 3520279278@qq.com
  * @Date: 2023-01-30 21:49:34
  * @LastEditors: sunburst89757 3520279278@qq.com
- * @LastEditTime: 2023-01-31 22:13:57
+ * @LastEditTime: 2023-02-01 20:47:24
  * @Description:列表转树
  *
  * Copyright (c) 2023 by sunburst89757 3520279278@qq.com, All Rights Reserved.
@@ -50,6 +50,7 @@ let arr = [
   { id: 3, name: "部门3", pid: 1 },
   { id: 4, name: "部门4", pid: 3 },
   { id: 5, name: "部门5", pid: 4 },
+  { id: 6, name: "部门7", pid: 0 },
 ];
 /**
  * @description:
@@ -60,9 +61,11 @@ let arr = [
 function list2tree(arr, root) {
   // filter和map都不更改arr的值
   // 先找出一级的 然后再以一级的进行递归
-  return arr
+  const res = arr
     .filter((item) => item.pid === root)
     .map((item) => ({ ...item, children: list2tree(arr, item.id) }));
+  // 没有children的项就直接是null
+  return res.length === 0 ? null : res;
 }
 
 const a = list2tree(arr, 0);
