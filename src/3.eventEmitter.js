@@ -2,7 +2,7 @@
  * @Author: sunburst89757 3520279278@qq.com
  * @Date: 2022-12-30 22:04:46
  * @LastEditors: sunburst89757 3520279278@qq.com
- * @LastEditTime: 2023-01-30 20:37:52
+ * @LastEditTime: 2023-02-15 09:43:46
  * @Description:
  *
  * Copyright (c) 2023 by sunburst89757 3520279278@qq.com, All Rights Reserved.
@@ -29,13 +29,21 @@ class EventEmitter {
       fn.call(undefined, ...args);
     });
   }
+  //  注册单次监听器
+  once(name, fn) {
+    const warapper = (...args) => {
+      fn.call(undefined, ...args);
+      this.off(name, warapper);
+    };
+    this.on(name, warapper);
+  }
 }
 const e = new EventEmitter();
 const sayhi = (...args) => {
   console.log(...args);
 };
-e.on("xxx", sayhi);
+e.once("xxx", sayhi);
 // e.off("xxx", sayhi);
-setTimeout(() => {
-  e.trigger("xxx", 1, 2, 3);
-}, 3000);
+e.trigger("xxx", 1, 2, 3);
+
+e.trigger("xxx", 78);
