@@ -8,13 +8,15 @@
   </head>
   <body>
     <div id="app"></div>
-    <div id="xxx"></div>
+    <div id="xxx">
+      <button id="btn">click</button>
+    </div>
     <!-- <script src="./src/1.promise.js"></script> -->
     <!-- <script src="./src/4.call_apply_bind.js"></script> -->
     <!-- <script src="./src/5.compose.js"></script> -->
     <!-- <script src="./src/14.concurrentPromise.js"></script> -->
     <!-- <script src="./src/19.list2tree.js"></script> -->
-    <script src="./src/21.findCommonParent.js"></script>
+    <!-- <script src="./src/21.findCommonParent.js"></script>
     <script>
       console.log(
         findCommonParent(
@@ -22,6 +24,18 @@
           document.querySelector("#xxx")
         )
       );
+    </script> -->
+    <script src="./src/16.debounce.js"></script>
+    <script>
+      const btn = document.getElementById("btn");
+      const fn = debounce(
+        1000,
+        () => {
+          console.log("点击");
+        },
+        true
+      );
+      btn.addEventListener("click", fn);
     </script>
   </body>
 </html>
