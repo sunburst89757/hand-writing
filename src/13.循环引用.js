@@ -7,20 +7,25 @@
  *
  * Copyright (c) 2023 by sunburst89757 3520279278@qq.com, All Rights Reserved.
  */
-// 内部引用外部才会出现循环引用
-function isCycling(obj) {
-  const cache = new Set();
-  const detect = (obj) => {
-    if (typeof obj === "object" && typeof obj !== "null") {
-      if (cache.has(obj)) return true;
-      else cache.add(obj);
-      for (const key in obj) {
-        isCyclic(obj[key]);
+// 内部引用外部才会出现循环引用  使用dfs判断
+function hasCircularReference(obj) {
+  var visited = new Set();
+
+  function dfs(node) {
+    if (typeof node === 'object' && node !== null) {
+      if (visited.has(node)) {
+        return true; // 发现循环引用
       }
-      // 必须删除 因为同层互相引用没有关系 跨层才会有循环引用的问题
-      set.delete(obj);
+      visited.add(node);
+      for (var key in node) {
+        if (dfs(node[key])) {
+          return true; // 发现循环引用
+        }
+      }
+      visited.delete(node);
     }
     return false;
-  };
-  return detect(obj);
+  }
+
+  return dfs(obj);
 }
